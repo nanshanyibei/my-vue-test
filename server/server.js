@@ -41,9 +41,21 @@ app.post('/sign-up', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
-  const {emailAddress, passWord} = req.body
+  const {emailAddress, passWord, userType} = req.body
+  let tableName
+  if (userType === 'employee') {
+    tableName = 'employee'
+  } else {
+    tableName = 'manager'
+  }
   console.log('test', emailAddress, passWord)
-  return res.json('test')
+  var fields = ['emailAddress', 'passWord']
+  var sql = 'SELECT ?? FROM ?? WHERE emailAddress = ? && passWord = ?'
+  connection.query(sql, [fields, tableName, emailAddress, passWord], function (error, results, f) {
+    if (error) throw error
+    console.log(results)
+    return res.json('ok')
+  })
 })
 
 server.listen(9093, function () {

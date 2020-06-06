@@ -19,7 +19,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
+        <el-button class="login-button" plain @click="clickLogin">Log In</el-button>
       </div>
     </div>
   </div>
