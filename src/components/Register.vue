@@ -1,14 +1,14 @@
 <template>
   <div class="hello">
     <div class="login-container">
-      <h1 class="please-login">Log In</h1>
+      <h1 class="please-login">Welcome</h1>
       <div class="word-input">
         <span class="emial">Enter your email:</span>
-        <el-input class="user-name" v-model="userName" placeholder="please enter your email adress"></el-input>
+        <el-input class="user-name" v-model="emailAddress" placeholder="please enter your email adress"></el-input>
       </div>
       <div class="word-input">
         <span class="emial">Full Name:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="passWord" show-password></el-input>
+        <el-input class="password" placeholder="Please enter the password" v-model="fullName" show-password></el-input>
       </div>
       <div class="word-input">
         <span class="emial">Password:</span>
@@ -16,9 +16,9 @@
       </div>
       <div class="word-input">
         <span class="emial">Confrim password:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="passWord" show-password></el-input>
+        <el-input class="password" placeholder="Please enter the password" v-model="rePassWord" show-password></el-input>
       </div>
-      <el-button class="login-button" plain>Log In</el-button>
+      <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
     </div>
   </div>
 </template>
@@ -28,8 +28,10 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      userName:'',
-      passWord:''
+      emailAddress:'',
+      fullName:'',
+      passWord:'',
+      rePassWord:''
     }
   },
   methods:{
