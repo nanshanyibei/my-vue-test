@@ -18,7 +18,17 @@
         <span class="emial">Confrim password:</span>
         <el-input class="password" placeholder="Please enter the password" v-model="rePassWord" show-password></el-input>
       </div>
-      <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
+      <div class="select-area">
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -31,13 +41,45 @@ export default {
       emailAddress:'',
       fullName:'',
       passWord:'',
-      rePassWord:''
+      rePassWord:'',
+      options: [{
+          value: 'employee',
+          label: 'employee'
+        }, {
+          value: 'manager',
+          label: 'manager'
+        }],
+      value: 'employee'
     }
   },
   methods:{
     clickRegister(){
-      console.log('register')
-      this.$router.push('/register')
+      if(this.passWord !== this.rePassWord){
+        alert('You have input the different password')
+      }else{
+        this.$axios({
+          method: "post",
+          url: '/sign-up',
+          data: {
+            emailAddress: this.userName,
+            passWord: this.passWord,
+            fullName:this.fullName,
+            userType:this.value
+          }
+        })
+          .then(res => {
+            if(res.data.code){
+              alert(res.data.msg)
+              this.value = 'true'
+            }else{
+              console.log(res.data.data)
+              this.$router.push('/login')
+            }
+          })
+          .catch(err => {
+            console.log(err, 'error')
+          })
+      }
     }
   }
 }
@@ -73,9 +115,10 @@ export default {
   font-size: 18px;
   width: 170px;
 }
-.login-button{
-  margin: 30px auto;
-  display: block
+.select-area{
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0 50px;
 }
 .register-button{
   position: absolute;

@@ -10,24 +10,64 @@
         <span class="emial">Password:</span>
         <el-input class="password" placeholder="Please enter the password" v-model="passWord" show-password></el-input>
       </div>
-      <el-button class="login-button" plain>Log In</el-button>
+      <div class="select-area">
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Login',
   data () {
     return {
       userName:'',
-      passWord:''
+      passWord:'',
+      options: [{
+          value: 'employee',
+          label: 'employee'
+        }, {
+          value: 'manager',
+          label: 'manager'
+        }],
+      value: 'employee'
     }
   },
   methods:{
-    clickRegister(){
-      console.log('register')
-      this.$router.push('/register')
+    clickLogin(){
+      console.log('userName,passWord',this.userName,this.passWord)
+      this.$axios({
+				method: "post",
+				url: '/login',
+				data: {
+          emailAddress: this.userName,
+          passWord: this.passWord,
+          userType:this.value
+				}
+			})
+				.then(res => {
+          if(res.data.code){
+            alert(res.data.msg)
+            this.value = 'true'
+          }else{
+            console.log(res.data.data)
+            this.login=false
+            this.courseList=res.data.data.course
+            this._id=res.data.data._id
+          }
+				})
+				.catch(err => {
+					console.log(err, 'error')
+				})
     }
   }
 }
@@ -62,9 +102,10 @@ export default {
   line-height: 45px;
   font-size: 18px;
 }
-.login-button{
-  margin: 30px auto;
-  display: block
+.select-area{
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0 50px;
 }
 .register-button{
   position: absolute;
