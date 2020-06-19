@@ -71,6 +71,7 @@ export default {
 			this.isInviteMember=false
 			this.ismyWeek=false
 			this.isearch=false
+			this.defaultShow=false
 		},
 		calender(){
 			this.isNotification=false
@@ -78,6 +79,7 @@ export default {
 			this.isInviteMember=false
 			this.ismyWeek=false
 			this.isearch=false
+			this.defaultShow=false
 		},
 		myWeek(){
 			this.isNotification=false
@@ -85,6 +87,7 @@ export default {
 			this.isInviteMember=false
 			this.ismyWeek=true
 			this.isearch=false
+			this.defaultShow=false
 		},
 		inviteMember(){
 			this.isNotification=false
@@ -92,6 +95,7 @@ export default {
 			this.isInviteMember=true
 			this.ismyWeek=false
 			this.isearch=false
+			this.defaultShow=false
 		},
 		search(){
 			this.isNotification=false
@@ -99,6 +103,7 @@ export default {
 			this.isInviteMember=false
 			this.ismyWeek=false
 			this.isearch=true
+			this.defaultShow=false
 		}
   }
 }

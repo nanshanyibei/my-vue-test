@@ -83,6 +83,17 @@ app.get('/get-time-event', function (req, res) {
   })
 })
 
+app.post('/update-event', function (req, res) {
+  const {id, status} = req.body
+  console.log('id,status', id, status)
+  var sql = `UPDATE timeEvent set isFinish=${status} where id=${id}`
+  connection.query(sql, function (error, results) {
+    if (error) throw error
+    console.log('results', results)
+    return res.json({code: 1, data: results})
+  })
+})
+
 server.listen(9093, function () {
   console.log('Node app start at port 9093')
 })

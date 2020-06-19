@@ -22,7 +22,7 @@
 			</div>
 			<v-event-element v-for="event in events" :key="event.event"
 				:milestone='event.event' :owlver='event.fullName'
-				:status='event.isFinish' :dueDate='event.date'/>
+				:status='event.isFinish' :dueDate='event.date' :id="event.id"/>
 		</div>
 	</div>
 </template>

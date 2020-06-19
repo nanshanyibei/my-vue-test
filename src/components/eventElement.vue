@@ -16,7 +16,7 @@ export default {
     }
 	},
 	props:[
-		'milestone','owlver','status','dueDate'
+		'milestone','owlver','status','dueDate','id'
 	],
 	mounted(){
 		this.statusState=this.status
@@ -28,6 +28,23 @@ export default {
 			}else{
 				this.statusState='0'
 			}
+			this.$axios({
+				method:'post',
+				url:"/update-event",
+				data: {
+					id:this.id,
+					status:this.statusState
+				}
+			})
+				.then(res => {
+					if(res.data.code){
+						console.log('res',res.data.data)
+						this.events=res.data.data
+					}
+				})
+				.catch(err => {
+					console.log(err,'error')
+				})
 		}
 	}
 }
