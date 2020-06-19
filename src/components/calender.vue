@@ -53,27 +53,30 @@ export default {
 		this.value=`${this.months[month]}  ${year}`
 		const start=new Date(year,month,1)
 		const end=new Date(year,month+1,0)
-		this.calcWeek(start,end,(new Date(year,month+1,0)).getDate())
+		this.calcWeek(start,end,(new Date(year,month+1,0)).getDate(),year,month)
 	},
 	methods:{
-		calcWeek(start,end,days){
+		calcWeek(start,end,days,year,month){
 			let weekElement=[]
 			let startWeekDay=start.getDay()
 			let isFullFlag=false
+			if(month+1<10){
+				month='0'+month
+			}
 			if(startWeekDay==0){
-				weekElement=[1]
+				weekElement=[`${year}${month}01`]
 			}else if(startWeekDay==1){
-				weekElement=[',',1]
+				weekElement=[',',`${year}${month}01`]
 			}else if(startWeekDay==2){
-				weekElement=[',',',',1]
+				weekElement=[',',',',`${year}${month}01`]
 			}else if(startWeekDay==3){
-				weekElement=[',',',',',',1]
+				weekElement=[',',',',',',`${year}${month}01`]
 			}else if(startWeekDay==4){
-				weekElement=[',',',',',',',',1]
+				weekElement=[',',',',',',',',`${year}${month}01`]
 			}else if(startWeekDay==5){
-				weekElement=[',',',',',',',',',',1]
+				weekElement=[',',',',',',',',',',`${year}${month}01`]
 			}else{
-				weekElement=[',',',',',',',',',',',',1]
+				weekElement=[',',',',',',',',',',',',`${year}${month}01`]
 				isFullFlag=true
 			}
 			console.log('weekElement',weekElement)
@@ -82,7 +85,11 @@ export default {
 				weekElement=[]
 			}
 			for(let i=2;i<=days;i++){
-				weekElement.push(i)
+				if(i<10){
+					weekElement.push(`${year}${month}0${i}`)
+				}else{
+					weekElement.push(`${year}${month}${i}`)
+				}
 				if(weekElement.length==7){
 					this.weeks.push(weekElement)
 					weekElement=[]

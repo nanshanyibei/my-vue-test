@@ -1,6 +1,6 @@
 <template>
 	<div class="calendar-container">
-		<div class="top-date" @click="changeToShowStatus">{{dateDay?dateDay:0}}</div>
+		<div class="top-date" @click="changeToShowStatus">{{dateDay!==','?dateDay.slice(6,8):'not'}}</div>
 		<div class="calendar-input" v-if="isInput">
 			<el-input
 				class="textarea-input"
@@ -19,19 +19,42 @@ export default {
   name: 'dateElement',
   data () {
     return {
-			date: 'TEST',
 			isInput:false,
 			textarea: ''
     }
 	},
 	props:[
-		'dateDay','toDo'
+		'dateDay','toDo'//dateDay给出类似于20200621样式的
 	],
 	mounted(){
 	},
 	methods:{
 		changeToShowStatus(){
-			this.isInput=!this.isInput
+			if(!this.isInput){
+				this.isInput=true
+			}else{
+				this.$axios({
+					method: "post",
+					url: '/time-event',
+					data: {
+						date: this.dateDay,
+						event: this.textarea,
+						fullName:this.$route.query.id
+					}
+				})
+					.then(res => {
+						console.log('res',res)
+						if(res.data.code){
+							alert(res.data.msg)
+						}else{
+							console.log(res.data.data)
+							this.isInput=false
+						}
+					})
+					.catch(err => {
+						console.log(err, 'error')
+					})
+			}
 			this.toDo=this.textarea
 		}
 	}

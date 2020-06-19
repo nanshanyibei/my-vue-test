@@ -59,6 +59,19 @@ app.post('/login', function (req, res) {
   })
 })
 
+app.post('/time-event', function (req, res) {
+  const {fullName, date, event} = req.body
+  console.log('time-event', fullName, date, event)
+  const fields = ['fullName', 'date', 'event']
+  const values = [fullName, date, event]
+  const sql = 'INSERT INTO ??(??) VALUES (?)'
+  connection.query(sql, ['timeEvent', fields, values], function (error, results, f) {
+    if (error) throw error
+    console.log(results)
+    return res.json({code: 0, msg: 'You have log up succeed!'})
+  })
+})
+
 server.listen(9093, function () {
   console.log('Node app start at port 9093')
 })

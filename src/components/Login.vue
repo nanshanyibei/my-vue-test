@@ -60,7 +60,7 @@ export default {
           }else{
             console.log(res.data.data)
             alert('You have Login Succeed!')
-            this.$router.push('/after-login')
+            this.$router.push({path:'/after-login',query:{id:this.userName}})
           }
 				})
 				.catch(err => {
