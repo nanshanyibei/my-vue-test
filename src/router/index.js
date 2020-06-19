@@ -4,6 +4,7 @@ import HomePage from '@/components/HomePage'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
 import AfterLogin from '@/components/AfterLogin'
+import ICProfile from '@/components/ICProfile'
 
 Vue.use(Router)
 
@@ -25,6 +26,10 @@ export default new Router({
       path: '/after-login',
       name: 'AfterLogin',
       component: AfterLogin
+    }, {
+      path: '/ic-profile',
+      name: 'ICProfile',
+      component: ICProfile
     }
   ]
 })

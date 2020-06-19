@@ -21,7 +21,7 @@
 						<span class="font-size-18" slot="title" @click="search">Search</span>
 					</el-menu-item>
 					<el-menu-item index="6">
-						<span class="font-size-18" slot="title">IC</span>
+						<span class="font-size-18" slot="title" @click="icProfile">IC</span>
 					</el-menu-item>
 				</el-menu>
 			</el-col>
@@ -32,6 +32,7 @@
 				<v-inviteMember v-if="isInviteMember"></v-inviteMember>
 				<v-myWeek v-if="ismyWeek"></v-myWeek>
 				<v-search v-if="isearch"></v-search>
+				<v-ic-profile v-if="isicProfile"></v-ic-profile>
 			</el-col>
 		</el-row>
 	</div>
@@ -44,6 +45,7 @@ import inviteMember from './inviteMember'
 import myWeek from './myWeek'
 import search from './search'
 import defaultLogin from './defaultLogin'
+import icProfile from './icProfile'
 export default {
 	name: 'AfterLogin',
 	components:{
@@ -52,7 +54,8 @@ export default {
 		'v-inviteMember':inviteMember,
 		'v-myWeek':myWeek,
 		'v-search':search,
-		'v-default-login':defaultLogin
+		'v-default-login':defaultLogin,
+		'v-ic-profile':icProfile
 	},
   data () {
     return {
@@ -62,6 +65,7 @@ export default {
 			isInviteMember:false,
 			ismyWeek:false,
 			isearch:false,
+			isicProfile:false
     }
   },
   methods:{
@@ -72,6 +76,7 @@ export default {
 			this.ismyWeek=false
 			this.isearch=false
 			this.defaultShow=false
+			this.isicProfile=false
 		},
 		calender(){
 			this.isNotification=false
@@ -80,6 +85,7 @@ export default {
 			this.ismyWeek=false
 			this.isearch=false
 			this.defaultShow=false
+			this.isicProfile=false
 		},
 		myWeek(){
 			this.isNotification=false
@@ -88,6 +94,7 @@ export default {
 			this.ismyWeek=true
 			this.isearch=false
 			this.defaultShow=false
+			this.isicProfile=false
 		},
 		inviteMember(){
 			this.isNotification=false
@@ -96,6 +103,7 @@ export default {
 			this.ismyWeek=false
 			this.isearch=false
 			this.defaultShow=false
+			this.isicProfile=false
 		},
 		search(){
 			this.isNotification=false
@@ -104,6 +112,10 @@ export default {
 			this.ismyWeek=false
 			this.isearch=true
 			this.defaultShow=false
+			this.isicProfile=false
+		},
+		icProfile(){
+			this.$router.push('/ic-profile')
 		}
   }
 }
