@@ -29,14 +29,13 @@ app.post('/sign-up', function (req, res) {
   } else {
     tableName = 'manager'
   }
-  console.log('emailAddress, fullName, passWord', emailAddress, fullName, passWord, userType)
   var fields = ['emailAddress', 'fullName', 'passWord']
   var values = [emailAddress, fullName, passWord]
   var sql = 'INSERT INTO ??(??) VALUES (?)'
   connection.query(sql, [tableName, fields, values], function (error, results, f) {
     if (error) throw error
     console.log(results)
-    return res.json('ok')
+    return res.json({code: 0, msg: 'You have log up succeed!'})
   })
 })
 
@@ -48,13 +47,15 @@ app.post('/login', function (req, res) {
   } else {
     tableName = 'manager'
   }
-  console.log('test', emailAddress, passWord)
-  var fields = ['emailAddress', 'passWord']
-  var sql = 'SELECT ?? FROM ?? WHERE emailAddress = ? && passWord = ?'
-  connection.query(sql, [fields, tableName, emailAddress, passWord], function (error, results, f) {
+  const fields = ['emailAddress', 'passWord']
+  var sql = 'SELECT ?? FROM ?? WHERE emailAddress = ?'
+  connection.query(sql, [fields, tableName, emailAddress], function (error, results, f) {
     if (error) throw error
-    console.log(results)
-    return res.json('ok')
+    console.log('results', results[0], typeof (results[0]))
+    if (results[0].passWord === passWord) {
+      return res.json({code: 0, data: results})
+    }
+    return res.json({code: 1, msg: 'Wrong EmailAddress or Wrong PassWord'})
   })
 })
 

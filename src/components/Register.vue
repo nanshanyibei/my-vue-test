@@ -61,7 +61,7 @@ export default {
           method: "post",
           url: '/sign-up',
           data: {
-            emailAddress: this.userName,
+            emailAddress: this.emailAddress,
             passWord: this.passWord,
             fullName:this.fullName,
             userType:this.value
@@ -70,9 +70,8 @@ export default {
           .then(res => {
             if(res.data.code){
               alert(res.data.msg)
-              this.value = 'true'
             }else{
-              console.log(res.data.data)
+              alert(res.data.msg)
               this.$router.push('/login')
             }
           })

@@ -57,12 +57,10 @@ export default {
 				.then(res => {
           if(res.data.code){
             alert(res.data.msg)
-            this.value = 'true'
           }else{
             console.log(res.data.data)
-            this.login=false
-            this.courseList=res.data.data.course
-            this._id=res.data.data._id
+            alert('You have Login Succeed!')
+            this.$router.push('/after-login')
           }
 				})
 				.catch(err => {
