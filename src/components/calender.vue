@@ -23,7 +23,7 @@
 			</div>
 			<div class="test-weeks">
 				<div v-for="week in weeks" :key="week" class="week-container">
-					<v-dateElement v-for="day in week" :key="day" :dateDay='day'/>
+					<v-dateElement v-for="day in week" :key="day" :dateDay='day[0]' :toDo='day[1]'/>
 				</div>
 			</div>
 		</div>
@@ -54,6 +54,10 @@ export default {
 		const start=new Date(year,month,1)
 		const end=new Date(year,month+1,0)
 		this.calcWeek(start,end,(new Date(year,month+1,0)).getDate(),year,month)
+		
+	},
+	created(){
+		
 	},
 	methods:{
 		calcWeek(start,end,days,year,month){
@@ -64,19 +68,19 @@ export default {
 				month='0'+month
 			}
 			if(startWeekDay==0){
-				weekElement=[`${year}${month}01`]
+				weekElement=[[`${year}${month}01`,'']]
 			}else if(startWeekDay==1){
-				weekElement=[',',`${year}${month}01`]
+				weekElement=[[',',''],[`${year}${month}01`,'']]
 			}else if(startWeekDay==2){
-				weekElement=[',',',',`${year}${month}01`]
+				weekElement=[[',',''],[',',''],[`${year}${month}01`,'']]
 			}else if(startWeekDay==3){
-				weekElement=[',',',',',',`${year}${month}01`]
+				weekElement=[[',',''],[',',''],[',',''],[`${year}${month}01`,'']]
 			}else if(startWeekDay==4){
-				weekElement=[',',',',',',',',`${year}${month}01`]
+				weekElement=[[',',''],[',',''],[',',''],[',',''],[`${year}${month}01`,'']]
 			}else if(startWeekDay==5){
-				weekElement=[',',',',',',',',',',`${year}${month}01`]
+				weekElement=[[',',''],[',',''],[',',''],[',',''],[',',''],[`${year}${month}01`,'']]
 			}else{
-				weekElement=[',',',',',',',',',',',',`${year}${month}01`]
+				weekElement=[[',',''],[',',''],[',',''],[',',''],[',',''],[',',''],[`${year}${month}01`,'']]
 				isFullFlag=true
 			}
 			console.log('weekElement',weekElement)
@@ -86,9 +90,9 @@ export default {
 			}
 			for(let i=2;i<=days;i++){
 				if(i<10){
-					weekElement.push(`${year}${month}0${i}`)
+					weekElement.push([`${year}${month}0${i}`,''])
 				}else{
-					weekElement.push(`${year}${month}${i}`)
+					weekElement.push([`${year}${month}${i}`,''])
 				}
 				if(weekElement.length==7){
 					this.weeks.push(weekElement)
@@ -99,10 +103,34 @@ export default {
 			if(weekElement.length!=0){
 				let j=7-weekElement.length
 				for(let i=0;i<j;i++){
-					weekElement.push(',')
+					weekElement.push([',',''])
 				}
 			}
-			console.log(this.weeks)
+			this.$axios({
+				methods:'get',
+				url:"/get-time-event",
+				params: {
+					fullName:this.$route.query.id,
+				}
+			})
+				.then(res => {
+					if(res.data.code){
+						console.log('res',res.data.data)
+						for(var i=0;i<this.weeks.length;i++){
+							for(var j=0;j<7;j++){
+								for(var k=0;k<res.data.data.length;k++){
+									if(this.weeks[i][j][0]==res.data.data[k].date){
+										this.weeks[i][j][1]=res.data.data[k].event
+									}
+								}
+							}
+						}
+					}
+					console.log(this.weeks)
+				})
+				.catch(err => {
+					console.log(err,'error')
+				})
 		}
 	}
 }

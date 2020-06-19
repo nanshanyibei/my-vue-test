@@ -68,7 +68,18 @@ app.post('/time-event', function (req, res) {
   connection.query(sql, ['timeEvent', fields, values], function (error, results, f) {
     if (error) throw error
     console.log(results)
-    return res.json({code: 0, msg: 'You have log up succeed!'})
+    return res.json({code: 0, msg: 'You have updateSucceed!'})
+  })
+})
+
+app.get('/get-time-event', function (req, res) {
+  const {fullName} = req.query
+  console.log('fullName', fullName)
+  var sql = 'SELECT * FROM ?? WHERE fullName = ? '
+  connection.query(sql, ['timeEvent', fullName], function (error, results, f) {
+    if (error) throw error
+    console.log('results', results[0], typeof (results[0]))
+    return res.json({code: 1, data: results})
   })
 })
 

@@ -3,7 +3,7 @@
 		<el-row class="tac col-row-padding">
 			<el-col :span="4">
 				<el-menu
-					default-active="1"
+					default-active="0"
 					class="el-menu-vertical-demo">
 					<el-menu-item index="1">
 						<span class="font-size-18" slot="title" @click="notification">Notification</span>
@@ -26,6 +26,7 @@
 				</el-menu>
 			</el-col>
 			<el-col :span="18">
+				<v-default-login v-if="defaultShow" />
 				<v-notification v-if="isNotification"></v-notification>
 				<v-calender v-if="isCalender"></v-calender>
 				<v-inviteMember v-if="isInviteMember"></v-inviteMember>
@@ -42,6 +43,7 @@ import calender from './calender'
 import inviteMember from './inviteMember'
 import myWeek from './myWeek'
 import search from './search'
+import defaultLogin from './defaultLogin'
 export default {
 	name: 'AfterLogin',
 	components:{
@@ -49,11 +51,13 @@ export default {
 		'v-calender':calender,
 		'v-inviteMember':inviteMember,
 		'v-myWeek':myWeek,
-		'v-search':search
+		'v-search':search,
+		'v-default-login':defaultLogin
 	},
   data () {
     return {
-      isNotification:true,
+			defaultShow:true,
+      isNotification:false,
 			isCalender:false,
 			isInviteMember:false,
 			ismyWeek:false,
