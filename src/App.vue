@@ -95,6 +95,9 @@ export default {
   width: fit-content;
   margin: 0 auto 15px;
 }
+.footer-navigation-center span{
+  cursor: pointer;
+}
 .footer-navigation-top{
   width: fit-content;
   margin: 5px auto 15px;
