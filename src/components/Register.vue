@@ -1,84 +1,33 @@
 <template>
-  <div class="hello">
-    <div class="login-container">
-      <h1 class="please-login">Welcome</h1>
-      <div class="word-input">
-        <span class="emial">Enter your email:</span>
-        <el-input class="user-name" v-model="emailAddress" placeholder="please enter your email adress"></el-input>
-      </div>
-      <div class="word-input">
-        <span class="emial">Full Name:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="fullName" show-password></el-input>
-      </div>
-      <div class="word-input">
-        <span class="emial">Password:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="passWord" show-password></el-input>
-      </div>
-      <div class="word-input">
-        <span class="emial">Confrim password:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="rePassWord" show-password></el-input>
-      </div>
-      <div class="select-area">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
+  <div class="register-content">
+    <div class="moncherigift">Moncherigift</div>
+    <div class="register-content-container">
+      <el-input v-model="accountName" class="register-element" placeholder="account name" />
+      <el-input v-model="password" class="register-element" placeholder="Password" />
+      <el-input v-model="firstName" class="register-element" placeholder="First Name" />
+      <el-input v-model="lastName" class="register-element" placeholder="Las tName" />
+      <el-input v-model="emailAddress" class="register-element" placeholder="Email" />
+      <el-input v-model="mobile" class="register-element" placeholder="Mobile" />
+      <div class="bottom-words">
+        By creating an account, you agree that you have read and accepted our Conditions of
+        Use and Privacy Notice.
       </div>
     </div>
+    <el-button class="create-account">Create account</el-button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Register',
   data () {
     return {
-      emailAddress:'',
-      fullName:'',
-      passWord:'',
-      rePassWord:'',
-      options: [{
-          value: 'employee',
-          label: 'employee'
-        }, {
-          value: 'manager',
-          label: 'manager'
-        }],
-      value: 'employee'
-    }
-  },
-  methods:{
-    clickRegister(){
-      if(this.passWord !== this.rePassWord){
-        alert('You have input the different password')
-      }else{
-        this.$axios({
-          method: "post",
-          url: '/sign-up',
-          data: {
-            emailAddress: this.emailAddress,
-            passWord: this.passWord,
-            fullName:this.fullName,
-            userType:this.value
-          }
-        })
-          .then(res => {
-            if(res.data.code){
-              alert(res.data.msg)
-            }else{
-              alert(res.data.msg)
-              this.$router.push('/login')
-            }
-          })
-          .catch(err => {
-            console.log(err, 'error')
-          })
-      }
+      accountName: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
+      mobile: ''
     }
   }
 }
@@ -86,41 +35,34 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hello{
+.moncherigift{
+  width: 500px;
+  margin: 150px auto 0;
+  border: 1px solid #000;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+.register-content-container{
+  width: 400px;
   margin: 0 auto;
-  width: 880px;
+  border: 1px solid #000;
+  border-top: none;
+  padding-top: 20px;
 }
-.login-container{
-  margin: 30px auto;
-  width: 600px;
+.register-element{
+  width: 300px;
+  margin: 0 auto 20px;
+  display: block;
 }
-.please-login{
-  margin-bottom: 30px;
-  text-align: center
+.bottom-words{
+  width: 300px;
+  margin: 0 auto 20px;
 }
-.password{
-  margin-bottom: 30px;
-  width: 430px;
-}
-.user-name{
-  margin-bottom: 15px;
-  width: 430px;
-}
-.word-input{
-  display: flex
-}
-.emial{
-  line-height: 45px;
-  font-size: 18px;
-  width: 170px;
-}
-.select-area{
-  display: flex;
-  justify-content: space-between;
-  margin: 30px 0 50px;
-}
-.register-button{
-  position: absolute;
-  right: 0;
+.create-account{
+  border: 1px solid #000;
+  margin: 40px auto 150px;
+  display: block;
+  width: fit-content;
 }
 </style>

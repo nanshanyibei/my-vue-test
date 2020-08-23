@@ -1,22 +1,53 @@
 <template>
-  <div id="app">
-    <div class="header">
-      <img class="top-logo" :src="imgUrl">
-      <div class="login-sign-up">
-        <span class="login-button" @click="clickLogin">Login</span>
-        /
-        <span class="login-button" @click="clickSignUp">Sign Up</span>
+  <div class="content">
+    <div class="top-navigation-bar">
+      <div class="top-navigation-bar-before">
+        <el-menu :default-active="activeIndex" class="el-menu-demo position-in-center" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="1">Home</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">GIFTS FOR HER</template>
+            <el-menu-item index="2-1">Fashion</el-menu-item>
+            <el-menu-item index="2-2">Beauty</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">GIFTS FOR HIM</template>
+            <el-menu-item index="3-1">Fashion</el-menu-item>
+            <el-menu-item index="3-2">Beauty</el-menu-item>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">GIFTS FOR US</template>
+            <el-menu-item index="4-1">Matching Sets</el-menu-item>
+            <el-menu-item index="4-2">Gourmet Hamners</el-menu-item>
+            <el-menu-item index="4-3">Hotel Packages</el-menu-item>
+          </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">CUSTOMER SERVICE</template>
+            <el-menu-item index="5-1">About Us</el-menu-item>
+            <el-menu-item index="5-2">FA Questions</el-menu-item>
+            <el-menu-item index="5-3">Blog</el-menu-item>
+            <el-menu-item index="5-4">Security & Refunds</el-menu-item>
+            <el-menu-item index="5-5">Returns & Refunds</el-menu-item>
+            <el-menu-item index="5-6">Join the Newslettery</el-menu-item>
+            <el-menu-item index="5-7">Terms & Conditions</el-menu-item>
+            <el-menu-item index="5-8">Deliver & Payment</el-menu-item>
+            <el-menu-item index="5-9">Contact Us</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="6">Account</el-menu-item>
+          <el-menu-item index="7">Login/Register</el-menu-item>
+        </el-menu>
       </div>
     </div>
     <router-view/>
-    <div class="footer">
-      <div class="about-us" @click="clickAboutUs">About Us</div>
-      <div class="about-us" @click="clickContactUs">Contact Us</div>
-      <div class="about-us" @click="clickNeedHelp">Need Help</div>
+    <div class="footer-navigation">
+      <div class="footer-navigation-top">E-BOOKS/LINKS</div>
+      <div class="footer-navigation-center">Follow us on Social Media:
+        <span>Facebook</span> /
+        <span>Instagram</span> /
+        <span>Twitter</span> /
+        <span>Linkedln</span> /
+        <span>YouTube</span>
+      </div>
     </div>
-    <div class="show-detail" v-if="aboutUs">Details of the relationship company</div>
-    <div class="show-detail" v-if="contactUs">The company's contact information such as phone number, email and address</div>
-    <div class="show-detail" v-if="needHelp">A dialog box appears and help can be sought online</div>
   </div>
 </template>
 
@@ -25,90 +56,50 @@ export default {
   name: 'App',
   data(){
     return {
-      username:'TEST',
-      imgUrl: require('./assets/WechatIMG57.png'),
-      aboutUs:false,
-      contactUs:false,
-      needHelp:false
+      onFirstWord: 'wine only'
     }
   },
   methods:{
-    clickLogin(){
-      this.$router.push('/login')
-      this.contactUs=false
-      this.aboutUs=false
-      this.needHelp=false
-    },
-    clickSignUp(){
-      this.$router.push('/register')
-      this.contactUs=false
-      this.aboutUs=false
-      this.needHelp=false
-    },
-    clickAboutUs(){
-      this.aboutUs=!this.aboutUs
-      this.contactUs=false
-      this.needHelp=false
-    },
-    clickContactUs(){
-      this.contactUs=!this.contactUs
-      this.aboutUs=false
-      this.needHelp=false
-    },
-    clickNeedHelp(){
-      this.needHelp=!this.needHelp
-      this.aboutUs=false
-      this.contactUs=false
+    fristWordClick(num){
     }
   }
 }
 </script>
 
-<style>
-#app{
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+<style scoped>
+.top-navigation-bar-before::before{
+  display: block;
+  content: 'MON CHERI GIFTS';
+  border-bottom: 1px solid #000;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
   font-size: 16px;
 }
-.header,.footer{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  height: 54px;
+.top-navigation-bar{
+  border-bottom: 1px solid #000;
 }
-.header{
-  border-bottom: 1px solid #2c3e50;
+.position-in-center{
+  width: fit-content;
+  margin: 0 auto;
+  border: none;
 }
-.footer{
-  border-top: 1px solid #2c3e50;
+.footer-navigation{
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  font-size: 16px;
 }
-.login-sign-up{
-  margin-right: 20px;
-  font-size: 18px;
-  line-height: 54px;
+.footer-navigation-center{
+  text-decoration: underline;
+  width: fit-content;
+  margin: 0 auto 15px;
 }
-.top-logo{
-  width: 50px;
-  height: 50px;
-  margin-left: 20px;
-}
-.login-button{
+.footer-navigation-center span{
   cursor: pointer;
 }
-.footer{
-  display: flex;
-  justify-content: space-between
-}
-.about-us{
-  margin-left: 20px;
-  margin-right: 20px;
-  font-size: 18px;
-}
-.show-detail{
-  width: 880px;
-  margin: 10px auto;
-  text-align: center
+.footer-navigation-top{
+  width: fit-content;
+  margin: 5px auto 15px;
 }
 </style>
