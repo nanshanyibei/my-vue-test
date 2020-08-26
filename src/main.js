@@ -2,9 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
+
+axios.defaults.baseURL = 'http://127.0.0.1:9093'
+Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

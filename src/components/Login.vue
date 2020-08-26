@@ -2,8 +2,8 @@
   <div class="register-content">
     <div class="moncherigift">Moncherigift</div>
     <div class="register-content-container">
-      <el-input v-model="userAccount" class="register-element" placeholder="User Account" />
-      <el-input v-model="userPassword" class="register-element" placeholder="User Password" />
+      <el-input v-model="emailAddress" class="register-element" placeholder="User Account" />
+      <el-input v-model="password" class="register-element" placeholder="User Password" />
     </div>
 		<div class="trouble-loggin-terms-of">
 			<el-button>Trouble loggin in ?</el-button>
@@ -21,14 +21,37 @@ export default {
   name: 'Login',
   data () {
     return {
-      userAccount: '',
+      emailAddress: '',
       password: '',
     }
 	},
 	methods: {
 		toRegister() {
 			this.$router.push('/register')
-		}
+    },
+    toLogin() {
+      this.$axios({
+        method: "post",
+        url: '/login',
+        data: {
+          emailAddress: this.emailAddress,
+          password: this.password,
+          userType: 'employee'
+        }
+      })
+        .then(res => {
+          if(res.data.code){
+            alert(res.data.msg)
+          }else{
+            alert('You have successfully logged in')
+            this.$router.push({ path: 'personal-page',  params: { userId: this.userAccount }}) 
+          }
+        })
+        .catch(err => {
+          alert('登录有误，请重新登录')
+          console.log(err, 'error')
+        })
+    }
 	}
 }
 </script>

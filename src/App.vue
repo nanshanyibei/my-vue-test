@@ -2,8 +2,10 @@
   <div class="content">
     <div class="top-navigation-bar">
       <div class="top-navigation-bar-before">
-        <el-menu :default-active="activeIndex" class="el-menu-demo position-in-center" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">Home</el-menu-item>
+        <el-menu class="el-menu-demo position-in-center" mode="horizontal">
+          <el-menu-item index="1">
+            <router-link to="/">Home</router-link>
+          </el-menu-item>
           <el-submenu index="2">
             <template slot="title">GIFTS FOR HER</template>
             <el-menu-item index="2-1">Fashion</el-menu-item>
@@ -33,7 +35,11 @@
             <el-menu-item index="5-9">Contact Us</el-menu-item>
           </el-submenu>
           <el-menu-item index="6">Account</el-menu-item>
-          <el-menu-item index="7">Login/Register</el-menu-item>
+          <el-menu-item index="7">
+            <router-link class="no-underline" v-if="isRegister" to="/register">Register</router-link> / 
+            <router-link class="no-underline" v-if="isRegister" to="/login">Login</router-link>
+            <span v-else class="no-underline" @click="toPersonalPage" >{{userName}}</span>
+          </el-menu-item>
         </el-menu>
       </div>
     </div>
@@ -56,12 +62,23 @@ export default {
   name: 'App',
   data(){
     return {
-      onFirstWord: 'wine only'
+      isRegister: true,
+      userName: ''
     }
   },
   methods:{
-    fristWordClick(num){
+    getPathChangeStatus() {
+      console.log('this.route', this.$route.path)
+      if (this.$route.path === '/login') {
+        this.isRegister = true
+      }
+    },
+    toPersonalPage() {
+      this.$router.push({ path: 'personal-page',  params: { userId: this.userName }})  
     }
+  },
+  watch:{
+    '$route':'getPathChangeStatus'
   }
 }
 </script>
@@ -79,6 +96,9 @@ export default {
 }
 .top-navigation-bar{
   border-bottom: 1px solid #000;
+}
+.no-underline{
+  text-decoration: none;
 }
 .position-in-center{
   width: fit-content;

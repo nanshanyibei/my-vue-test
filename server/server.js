@@ -22,15 +22,15 @@ app.get('/', function (req, res) {
 })
 
 app.post('/sign-up', function (req, res) {
-  const {emailAddress, fullName, passWord, userType} = req.body
+  const {accountName, password, firstName, lastName, emailAddress, mobile, userType} = req.body
   let tableName
   if (userType === 'employee') {
     tableName = 'employee'
   } else {
     tableName = 'manager'
   }
-  var fields = ['emailAddress', 'fullName', 'passWord']
-  var values = [emailAddress, fullName, passWord]
+  var fields = ['accountName', 'password', 'firstName', 'lastName', 'emailAddress', 'mobile']
+  var values = [accountName, password, firstName, lastName, emailAddress, mobile]
   var sql = 'INSERT INTO ??(??) VALUES (?)'
   connection.query(sql, [tableName, fields, values], function (error, results, f) {
     if (error) throw error
@@ -40,57 +40,22 @@ app.post('/sign-up', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
-  const {emailAddress, passWord, userType} = req.body
+  const {emailAddress, password, userType} = req.body
   let tableName
   if (userType === 'employee') {
     tableName = 'employee'
   } else {
     tableName = 'manager'
   }
-  const fields = ['emailAddress', 'passWord']
+  const fields = ['emailAddress', 'password']
   var sql = 'SELECT ?? FROM ?? WHERE emailAddress = ?'
   connection.query(sql, [fields, tableName, emailAddress], function (error, results, f) {
     if (error) throw error
     console.log('results', results[0], typeof (results[0]))
-    if (results[0].passWord === passWord) {
+    if (results[0].password === password) {
       return res.json({code: 0, data: results})
     }
     return res.json({code: 1, msg: 'Wrong EmailAddress or Wrong PassWord'})
-  })
-})
-
-app.post('/time-event', function (req, res) {
-  const {fullName, date, event} = req.body
-  console.log('time-event', fullName, date, event)
-  const fields = ['fullName', 'date', 'event']
-  const values = [fullName, date, event]
-  const sql = 'INSERT INTO ??(??) VALUES (?)'
-  connection.query(sql, ['timeEvent', fields, values], function (error, results, f) {
-    if (error) throw error
-    console.log(results)
-    return res.json({code: 0, msg: 'You have updateSucceed!'})
-  })
-})
-
-app.get('/get-time-event', function (req, res) {
-  const {fullName} = req.query
-  console.log('fullName', fullName)
-  var sql = 'SELECT * FROM ?? WHERE fullName = ? '
-  connection.query(sql, ['timeEvent', fullName], function (error, results, f) {
-    if (error) throw error
-    console.log('results', results[0], typeof (results[0]))
-    return res.json({code: 1, data: results})
-  })
-})
-
-app.post('/update-event', function (req, res) {
-  const {id, status} = req.body
-  console.log('id,status', id, status)
-  var sql = `UPDATE timeEvent set isFinish=${status} where id=${id}`
-  connection.query(sql, function (error, results) {
-    if (error) throw error
-    console.log('results', results)
-    return res.json({code: 1, data: results})
   })
 })
 
