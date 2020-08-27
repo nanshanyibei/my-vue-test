@@ -2,7 +2,7 @@
   <div class="content">
     <div class="top-navigation-bar">
       <div class="top-navigation-bar-before">
-        <el-menu class="el-menu-demo position-in-center" mode="horizontal">
+        <el-menu class="el-menu-demo position-in-center" mode="horizontal" @select="handleSelect">
           <el-menu-item index="1">
             <router-link to="/">Home</router-link>
           </el-menu-item>
@@ -68,13 +68,24 @@ export default {
   },
   methods:{
     getPathChangeStatus() {
-      console.log('this.route', this.$route.path)
       if (this.$route.path === '/login') {
         this.isRegister = true
       }
     },
     toPersonalPage() {
-      this.$router.push({ path: 'personal-page',  params: { userId: this.userName }})  
+      this.$router.push({ path: '/personal-page',  query: { userId: this.userName }})  
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      if(keyPath[0] === '2') {
+        this.$router.push({path:'/gift-page', query:{giftType: 'her'}})
+      } else if(keyPath[0] === '3') {
+        this.$router.push({path:'/gift-page', query:{giftType: 'him'}})
+      } else if (keyPath[0] === '4') {
+        this.$router.push({path:'/gift-page', query:{giftType: 'us'}})
+      } else {
+        console.log('--------')
+      }
     }
   },
   watch:{

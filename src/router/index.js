@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
+import GiftPage from '@/components/GiftPage'
 
 Vue.use(Router)
 
@@ -20,6 +21,10 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    }, {
+      path: '/gift-page',
+      name: 'GiftPage',
+      component: GiftPage
     }
   ]
 })
