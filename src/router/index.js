@@ -3,8 +3,7 @@ import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
-import AfterLogin from '@/components/AfterLogin'
-import ICProfile from '@/components/ICProfile'
+import GiftPage from '@/components/GiftPage'
 
 Vue.use(Router)
 
@@ -23,13 +22,9 @@ export default new Router({
       name: 'Login',
       component: Login
     }, {
-      path: '/after-login',
-      name: 'AfterLogin',
-      component: AfterLogin
-    }, {
-      path: '/ic-profile',
-      name: 'ICProfile',
-      component: ICProfile
+      path: '/gift-page',
+      name: 'GiftPage',
+      component: GiftPage
     }
   ]
 })
