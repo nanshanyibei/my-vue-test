@@ -1,11 +1,9 @@
 <template>
   <div class="content">
     <div class="top-navigation-bar">
-      <div class="top-navigation-bar-before">
+      <div v-if="!threeNavigation" class="top-navigation-bar-before">
         <el-menu class="el-menu-demo position-in-center" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">
-            <router-link to="/">Home</router-link>
-          </el-menu-item>
+          <el-menu-item index="1">Home</el-menu-item>
           <el-submenu index="2">
             <template slot="title">GIFTS FOR HER</template>
             <el-menu-item index="2-1">Fashion</el-menu-item>
@@ -27,7 +25,7 @@
             <el-menu-item index="5-1">About Us</el-menu-item>
             <el-menu-item index="5-2">FA Questions</el-menu-item>
             <el-menu-item index="5-3">Blog</el-menu-item>
-            <el-menu-item index="5-4">Security & Refunds</el-menu-item>
+            <el-menu-item index="5-4">Security & Privacy</el-menu-item>
             <el-menu-item index="5-5">Returns & Refunds</el-menu-item>
             <el-menu-item index="5-6">Join the Newslettery</el-menu-item>
             <el-menu-item index="5-7">Terms & Conditions</el-menu-item>
@@ -41,6 +39,13 @@
             <span v-else class="no-underline" @click="toPersonalPage" >{{userName}}</span>
           </el-menu-item>
         </el-menu>
+      </div>
+      <div v-else class="top-navigation-bar-before">
+        <div class="navigation-container">
+          <span class="navigation-container-home" @click="toHomeClick">Home</span>
+          <span class="navigation-container-center">{{dynamicRoute}}</span>
+          <span class="navigation-container-logout" @click="toLogout">Logout</span>
+        </div>
       </div>
     </div>
     <router-view/>
@@ -63,7 +68,9 @@ export default {
   data(){
     return {
       isRegister: true,
-      userName: ''
+      userName: '',
+      threeNavigation: false,
+      dynamicRoute: ''
     }
   },
   methods:{
@@ -77,15 +84,32 @@ export default {
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-      if(keyPath[0] === '2') {
+      this.threeNavigation = false
+      if(keyPath[0] === '1') {
+        this.$router.push({path:'/'})
+      } else if(keyPath[0] === '2') {
         this.$router.push({path:'/gift-page', query:{giftType: 'her'}})
       } else if(keyPath[0] === '3') {
         this.$router.push({path:'/gift-page', query:{giftType: 'him'}})
       } else if (keyPath[0] === '4') {
         this.$router.push({path:'/gift-page', query:{giftType: 'us'}})
-      } else {
-        console.log('--------')
+      } else if(keyPath[1] === '5-1'){
+        this.$router.push({path:'/about-us'})
+        this.dynamicRoute = 'About Us'
+        this.threeNavigation = true
+      } else if(keyPath[1] === '5-2') {
+        this.$router.push({path:'/f-a-question'})
+        this.threeNavigation = true
+        this.dynamicRoute='FA Questions'
+      } else if(keyPath[1] === '5-4') {
+        this.$router.push({path:'/security-privacy'})
+        this.threeNavigation = true
+        this.dynamicRoute='Security & Privacy'
       }
+    },
+    toHomeClick() {
+      this.$router.push({path:'/'})
+      this.threeNavigation=false
     }
   },
   watch:{
@@ -110,6 +134,34 @@ export default {
 }
 .no-underline{
   text-decoration: none;
+}
+.navigation-container{
+  height: 60px;
+  line-height: 60px;
+  width: 980px;
+  margin: 0 auto;
+  color: #909399;
+  cursor: pointer;
+}
+.navigation-container-home{
+  border-right: 1px solid #000;
+  width: 200px;
+  text-align: left;
+  display: inline-block;
+  color: #909399;
+  text-decoration: none;
+}
+.navigation-container-logout{
+  width: 200px;
+  text-align: right;
+  display: inline-block;
+  float: right;
+  border-left: 1px solid #000;
+}
+.navigation-container-center{
+  width: 570px;
+  text-align: center;
+  display: inline-block;
 }
 .position-in-center{
   width: fit-content;
