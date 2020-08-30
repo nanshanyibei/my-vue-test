@@ -1,7 +1,11 @@
 <template>
   <div class="shopping-cart-content">
 		<h1 class="shopping-cart">Shopping Cart</h1>
-		<div class="shipment-container">
+		<div v-if="isProductExit" class="no-product-cart">
+			<div class="have-no-items">"You have no items in your cart."</div>
+			<el-button class="continue-shopping" @click="continueShopping">CONTINUE SHOPPING</el-button>
+		</div>
+		<div v-else class="shipment-container">
 			<div class="shipment-words">Shipment 1</div>
 			<div class="picture-product-name-container">
 				<div class="product-picture">商品图片</div>
@@ -51,7 +55,7 @@
 			<el-button class="remove-button">Remove</el-button>
 			<span class="sub-total-calcu">Sub Total $???</span>
 		</div>
-		<el-button @click="checkoutClick" class="checkout-button">CHECKOUT</el-button>
+		<el-button v-if="isProductExit" @click="checkoutClick" class="checkout-button">CHECKOUT</el-button>
   </div>
 </template>
 
@@ -60,6 +64,7 @@ export default {
   name: 'ShoppingCart',
   data () {
     return {
+			isProductExit: false,
 			productNum: [],
 			productColor: [],
 			productSize: 'S',
@@ -77,7 +82,10 @@ export default {
 	},
 	methods: {
 		checkoutClick(){
-			this.$router.push('checkout')
+			this.$router.push('/checkout')
+		},
+		continueShopping(){
+			this.$router.push('/')
 		}
 	}
 }
@@ -93,10 +101,18 @@ export default {
 	margin: 30px auto;
 	width: fit-content;
 }
+.have-no-items{
+	width: fit-content;
+	margin: 50px auto;
+}
+.continue-shopping{
+	display: block;
+	margin: 50px auto;
+}
 .shipment-container{
 	border: 1px solid #000;
 	width: 700px;
-	margin: 0 auto;
+	margin: 0 auto 30px;
 }
 .shipment-words{
 	border-bottom: 1px solid #000;

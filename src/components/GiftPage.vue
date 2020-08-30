@@ -3,7 +3,7 @@
 		<div class="gift-for">Gifts for {{giftForType}}</div>
 		<div class="fashion-container">
 			<el-button class="fashion">Fashion</el-button>
-			<div class="images-name-container">
+			<div class="images-name-container" @click="toProductItem">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
 					<div class="image-price-container">
 						<div class="image">image{{item}}
@@ -15,7 +15,7 @@
 			</div>
 			<div class="images-name-container">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
-					<div class="image-price-container">
+					<div class="image-price-container" @click="toProductItem">
 						<div class="image">image{{item}}
 							<div class="price">price{{item}}</div>
 						</div>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="fashion-container">
 			<el-button class="fashion">Beauty</el-button>
-			<div class="images-name-container">
+			<div class="images-name-container" @click="toProductItem">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
 					<div class="image-price-container">
 						<div class="image">image{{item}}
@@ -38,7 +38,7 @@
 			</div>
 			<div class="images-name-container">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
-					<div class="image-price-container">
+					<div class="image-price-container" @click="toProductItem">
 						<div class="image">image{{item}}
 							<div class="price">price{{item}}</div>
 						</div>
@@ -65,6 +65,9 @@ export default {
 	methods: {
     getPathChangeStatus() {
 			this.giftForType = this.$route.query.giftType
+		},
+		toProductItem(){
+			this.$router.push('/product-item')
 		}
 	},
 	mounted() {

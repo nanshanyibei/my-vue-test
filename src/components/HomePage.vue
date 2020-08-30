@@ -4,7 +4,7 @@
 		<div class="fashion-container">
 			<div class="images-name-container">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
-					<div class="image-price-container">
+					<div class="image-price-container" @click="toProductItem">
 						<div class="image">image{{item}}
 							<div class="price">price{{item}}</div>
 						</div>
@@ -17,7 +17,7 @@
 		<div class="fashion-container">
 			<div class="images-name-container">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
-					<div class="image-price-container">
+					<div class="image-price-container" @click="toProductItem">
 						<div class="image">image{{item}}
 							<div class="price">price{{item}}</div>
 						</div>
@@ -28,7 +28,7 @@
 		</div>
     <div class="gift-for" @click="toGiftsPage('us')">Gifts for us</div>
 		<div class="fashion-container">
-			<div class="images-name-container">
+			<div class="images-name-container" @click="toProductItem">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
 					<div class="image-price-container">
 						<div class="image">image{{item}}
@@ -53,7 +53,10 @@ export default {
   methods: {
     toGiftsPage(giftPageType) {
       this.$router.push({path:'/gift-page', query: {giftType: giftPageType}})
-    }
+		},
+		toProductItem(){
+			this.$router.push('/product-item')
+		}
   }
 }
 </script>

@@ -9,6 +9,7 @@ import FAQuestion from '@/components/FAQuestion'
 import SecurityPrivacy from '@/components/SecurityPrivacy'
 import Checkout from '@/components/Checkout'
 import ShoppingCart from '@/components/ShoppingCart'
+import ProductItem from '@/components/ProductItem'
 
 Vue.use(Router)
 
@@ -50,6 +51,10 @@ export default new Router({
       path: '/shopping-cart',
       name: 'ShoppingCart',
       component: ShoppingCart
+    }, {
+      path: '/product-item',
+      name: 'ProductItem',
+      component: ProductItem
     }
   ]
 })
