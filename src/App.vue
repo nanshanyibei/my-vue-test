@@ -105,6 +105,9 @@ export default {
         this.$router.push({path:'/security-privacy'})
         this.threeNavigation = true
         this.dynamicRoute='Security & Privacy'
+      } else if(keyPath[1] === '5-8') {
+        this.$router.push('checkout')
+        this.threeNavigation=false
       }
     },
     toHomeClick() {

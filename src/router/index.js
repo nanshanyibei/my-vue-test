@@ -7,6 +7,7 @@ import GiftPage from '@/components/GiftPage'
 import AboutUs from '@/components/AboutUs'
 import FAQuestion from '@/components/FAQuestion'
 import SecurityPrivacy from '@/components/SecurityPrivacy'
+import Checkout from '@/components/Checkout'
 
 Vue.use(Router)
 
@@ -40,6 +41,10 @@ export default new Router({
       path: '/security-privacy',
       name: 'SecurityPrivacy',
       component: SecurityPrivacy
+    }, {
+      path: '/checkout',
+      name: 'Checkout',
+      component: Checkout
     }
   ]
 })
