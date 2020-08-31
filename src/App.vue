@@ -36,7 +36,7 @@
           <el-menu-item index="7">
             <router-link class="no-underline" v-if="isRegister" to="/register">Register</router-link> / 
             <router-link class="no-underline" v-if="isRegister" to="/login">Login</router-link>
-            <span v-else class="no-underline" @click="toPersonalPage" >{{userName}}</span>
+            <span class="no-underline" @click="toPersonalPage" >TEST{{userName}}</span>
           </el-menu-item>
         </el-menu>
       </div>
@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <router-view/>
+    <router-view />
     <div class="footer-navigation">
       <div class="footer-navigation-top">E-BOOKS/LINKS</div>
       <div class="footer-navigation-center">Follow us on Social Media:
@@ -80,7 +80,12 @@ export default {
       }
     },
     toPersonalPage() {
-      this.$router.push({ path: '/personal-page',  query: { userId: this.userName }})  
+      this.threeNavigation=true
+      this.dynamicRoute = 'My Account'
+      this.$router.push({ path: '/my-account',  query: { userId: this.userName }})  
+    },
+    handleRoute() {
+
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

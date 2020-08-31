@@ -10,6 +10,8 @@ import SecurityPrivacy from '@/components/SecurityPrivacy'
 import Checkout from '@/components/Checkout'
 import ShoppingCart from '@/components/ShoppingCart'
 import ProductItem from '@/components/ProductItem'
+import MyAccount from '@/components/MyAccount'
+import EditMyDetail from '@/components/EditMyDetail'
 
 Vue.use(Router)
 
@@ -55,6 +57,14 @@ export default new Router({
       path: '/product-item',
       name: 'ProductItem',
       component: ProductItem
+    }, {
+      path: '/my-account',
+      name: 'MyAccount',
+      component: MyAccount
+    }, {
+      path: '/edit-my-detail',
+      name: 'EditMyDetail',
+      component: EditMyDetail
     }
   ]
 })
