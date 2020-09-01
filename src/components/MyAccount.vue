@@ -1,13 +1,13 @@
 <template>
   <div class="about-us-content">
 		<div class="detail-bank-card-address-container">
-			<div class="edit-my-details" @click="toMyDetail">Edit my details</div>
-			<div class="edit-my-details">Edit my bank card</div>
-			<div class="edit-my-details">Edit my deliver address</div>
+			<div class="edit-my-details" @click="toMyDetailPage">Edit my details</div>
+			<div class="edit-my-details" @click="toMyBankCard">Edit my bank card</div>
+			<div class="edit-my-details" @click="toMyDeliverAddress">Edit my deliver address</div>
 		</div>
 		<div class="returns-orders-comments-container">
 			<div class="edit-my-details">Returns & Orders</div>
-			<div class="edit-my-details">My comments</div>
+			<div class="edit-my-details" @click="toMyComments">My comments</div>
 		</div>
   </div>
 </template>
@@ -20,8 +20,18 @@ export default {
     }
 	},
 	methods: {
-		toMyDetail(){
+		toMyDetailPage(){
+			console.log('-----')
 			this.$router.push('/edit-my-detail')
+		},
+		toMyBankCard(){
+			this.$router.push('/edit-my-bank-card')
+		},
+		toMyDeliverAddress(){
+			this.$router.push('/edit-address-card')
+		},
+		toMyComments(){
+			this.$router.push('/my-comments')
 		}
 	},
 	mounted(){

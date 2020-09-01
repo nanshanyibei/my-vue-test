@@ -87,6 +87,9 @@ export default {
     handleRoute() {
 
     },
+    toLogout() {
+
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
       this.threeNavigation = false

@@ -12,6 +12,11 @@ import ShoppingCart from '@/components/ShoppingCart'
 import ProductItem from '@/components/ProductItem'
 import MyAccount from '@/components/MyAccount'
 import EditMyDetail from '@/components/EditMyDetail'
+import EditMyBankCard from '@/components/EditMyBankCard'
+import AddBankCard from '@/components/AddBankCard'
+import AddAddressCard from '@/components/AddAddressCard'
+import EditAddressCard from '@/components/EditAddressCard'
+import MyComments from '@/components/MyComments'
 
 Vue.use(Router)
 
@@ -65,6 +70,26 @@ export default new Router({
       path: '/edit-my-detail',
       name: 'EditMyDetail',
       component: EditMyDetail
+    }, {
+      path: '/edit-my-bank-card',
+      name: 'EditMyBankCard',
+      component: EditMyBankCard
+    }, {
+      path: '/add-bank-card',
+      name: 'AddBankCard',
+      component: AddBankCard
+    }, {
+      path: '/add-address-card',
+      name: 'AddAddressCard',
+      component: AddAddressCard
+    }, {
+      path: '/edit-address-card',
+      name: 'EditAddressCard',
+      component: EditAddressCard
+    }, {
+      path: '/my-comments',
+      name: 'MyComments',
+      component: MyComments
     }
   ]
 })
