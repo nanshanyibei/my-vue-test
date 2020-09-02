@@ -22,7 +22,7 @@
 		</div>
 		
 		<div class="change-password-done">
-			<el-button>Change Password</el-button>
+			<el-button @click="changePassword">Change Password</el-button>
 			<el-button>Done</el-button>
 		</div>
   </div>
@@ -37,6 +37,9 @@ export default {
     }
 	},
 	methods: {
+		changePassword(){
+			this.$router.push('/change-password')
+		}
 	},
 	mounted(){
 

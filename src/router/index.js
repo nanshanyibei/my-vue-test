@@ -17,6 +17,9 @@ import AddBankCard from '@/components/AddBankCard'
 import AddAddressCard from '@/components/AddAddressCard'
 import EditAddressCard from '@/components/EditAddressCard'
 import MyComments from '@/components/MyComments'
+import ReturnOrders from '@/components/ReturnOrders'
+import ApplyReturns from '@/components/ApplyReturns'
+import ChangePassword from '@/components/ChangePassword'
 
 Vue.use(Router)
 
@@ -90,6 +93,18 @@ export default new Router({
       path: '/my-comments',
       name: 'MyComments',
       component: MyComments
+    }, {
+      path: '/return-orders',
+      name: 'ReturnOrders',
+      component: ReturnOrders
+    }, {
+      path: '/apply-returns',
+      name: 'ApplyReturns',
+      component: ApplyReturns
+    }, {
+      path: '/change-password',
+      name: 'ChangePassword',
+      component: ChangePassword
     }
   ]
 })

@@ -113,8 +113,12 @@ export default {
         this.$router.push({path:'/security-privacy'})
         this.threeNavigation = true
         this.dynamicRoute='Security & Privacy'
+      } else if(keyPath[1] === '5-5') {
+        this.$router.push('/return-orders')
+        this.threeNavigation=true
+        this.dynamicRoute='Returns & Refunds'
       } else if(keyPath[1] === '5-8') {
-        this.$router.push('checkout')
+        this.$router.push('/checkout')
         this.threeNavigation=false
       }
     },
