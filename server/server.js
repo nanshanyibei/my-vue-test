@@ -22,17 +22,11 @@ app.get('/', function (req, res) {
 })
 
 app.post('/sign-up', function (req, res) {
-  const {accountName, password, firstName, lastName, emailAddress, mobile, userType} = req.body
-  let tableName
-  if (userType === 'employee') {
-    tableName = 'employee'
-  } else {
-    tableName = 'manager'
-  }
-  var fields = ['accountName', 'password', 'firstName', 'lastName', 'emailAddress', 'mobile']
-  var values = [accountName, password, firstName, lastName, emailAddress, mobile]
+  const {userName, passWord, firstName, lastName, emailAddress, phoneNo, createDate, ifAdmin} = req.body
+  var fields = ['userName', 'passWord', 'firstName', 'lastName', 'emailAddress', 'phoneNo', 'createDate', 'ifAdmin']
+  var values = [userName, passWord, firstName, lastName, emailAddress, phoneNo, createDate, ifAdmin]
   var sql = 'INSERT INTO ??(??) VALUES (?)'
-  connection.query(sql, [tableName, fields, values], function (error, results, f) {
+  connection.query(sql, ['users_list', fields, values], function (error, results, f) {
     if (error) throw error
     console.log(results)
     return res.json({code: 0, msg: 'You have log up succeed!'})
@@ -40,22 +34,26 @@ app.post('/sign-up', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
-  const {emailAddress, password, userType} = req.body
-  let tableName
-  if (userType === 'employee') {
-    tableName = 'employee'
-  } else {
-    tableName = 'manager'
-  }
-  const fields = ['emailAddress', 'password']
+  const {emailAddress, passWord, ifAdmin} = req.body
+  const fields = ['emailAddress', 'passWord', 'ifAdmin']
   var sql = 'SELECT ?? FROM ?? WHERE emailAddress = ?'
-  connection.query(sql, [fields, tableName, emailAddress], function (error, results, f) {
+  connection.query(sql, [fields, 'users_list', emailAddress], function (error, results, f) {
     if (error) throw error
     console.log('results', results[0], typeof (results[0]))
-    if (results[0].password === password) {
+    if (results[0].passWord === passWord) {
       return res.json({code: 0, data: results})
     }
     return res.json({code: 1, msg: 'Wrong EmailAddress or Wrong PassWord'})
+  })
+})
+
+app.post('/update-personal-message', function (req, res) {
+  const {userName, phoneNo, emailAddress} = req.body
+  var sql = `UPDATE users_list SET userName=${userName},phoneNo=${phoneNo} WHERE emailAddress=${emailAddress};`
+  connection.query(sql, function (error, results, f) {
+    if (error) throw error
+    console.log(results)
+    return res.json({code: 0, msg: 'You have update your message succeed!'})
   })
 })
 
