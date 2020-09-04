@@ -8,22 +8,12 @@
 			</div>
 			<div class="right-container">
 				<el-input v-model="name" placeholder="name" class="input-element"></el-input>
-				<el-input v-model="city" placeholder="city" class="input-element"></el-input>
-				<div class="input-element label-radio">
-					<label class="input-gender">Gender:</label>
-					<el-radio-group v-model="radio" class="input-element">
-						<el-radio :label="0">Male</el-radio>
-						<el-radio :label="1">Female</el-radio>
-					</el-radio-group>
-				</div>
-				<el-input v-model="email" placeholder="email" class="input-element"></el-input>
 				<el-input v-model="phone" placeholder="phone" class="input-element"></el-input>
 			</div>
 		</div>
-		
 		<div class="change-password-done">
 			<el-button @click="changePassword">Change Password</el-button>
-			<el-button>Done</el-button>
+			<el-button @click="changePersonalMessage">Done</el-button>
 		</div>
   </div>
 </template>
@@ -33,16 +23,40 @@ export default {
   name: 'MyAccount',
   data () {
     return {
-			radio: 0
+			radio: 0,
+			name: '',
+			phone: ''
     }
 	},
 	methods: {
 		changePassword(){
 			this.$router.push('/change-password')
+		},
+		changePersonalMessage(){
+			this.$axios({
+        method: "post",
+        url: '/update-personal-message',
+        data: {
+          emailAddress: this.$route.query.emailAddress,
+					userName: this.name,
+					phoneNo: this.phone
+        }
+      })
+        .then(res => {
+          if(res.data.code){
+            alert(res.data.msg)
+          }else{
+            alert('You have successfully update your message')
+          }
+        })
+        .catch(err => {
+          alert('更新有误，请重新更新')
+          console.log(err, 'error')
+        })
 		}
 	},
 	mounted(){
-
+		console.log('this.$router', this.$route)
 	}
 }
 </script>

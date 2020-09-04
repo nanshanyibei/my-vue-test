@@ -22,7 +22,7 @@ export default {
 	methods: {
 		toMyDetailPage(){
 			console.log('-----')
-			this.$router.push('/edit-my-detail')
+			this.$router.push({path: '/edit-my-detail', query: {emailAddress: this.$route.query.emailAddress}})
 		},
 		toMyBankCard(){
 			this.$router.push('/edit-my-bank-card')
@@ -35,7 +35,7 @@ export default {
 		}
 	},
 	mounted(){
-
+		console.log('this.$router', this.$route)
 	}
 }
 </script>

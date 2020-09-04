@@ -20,14 +20,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for em
 -- ----------------------------
-DROP TABLE IF EXISTS `employee`;
-CREATE TABLE `employee` (
-	`id` int(11) not null auto_increment primary key,
-  `accountName` varchar(20) DEFAULT NULL, 
-  `password` varchar(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `users_list`;
+CREATE TABLE `users_list` (
+	`userId` int(11) not null auto_increment primary key,
+  `userName` varchar(20) DEFAULT NULL, 
+  `passWord` varchar(20) DEFAULT NULL,
   `firstName` varchar(20) DEFAULT NULL,
   `lastName` varchar(20) DEFAULT NULL,
   `emailAddress` varchar(20) DEFAULT NULL,
-  `mobile` varchar(20) DEFAULT NULL
-)ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `phoneNo` varchar(11) DEFAULT NULL,
+  `createDate` varchar(11) DEFAULT NULL,
+  `ifAdmin` TINYINT(1) DEFAULT NULL
+);ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 

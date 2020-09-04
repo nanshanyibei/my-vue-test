@@ -35,8 +35,7 @@ export default {
         url: '/login',
         data: {
           emailAddress: this.emailAddress,
-          password: this.password,
-          userType: 'employee'
+          passWord: this.password
         }
       })
         .then(res => {
@@ -44,7 +43,7 @@ export default {
             alert(res.data.msg)
           }else{
             alert('You have successfully logged in')
-            this.$router.push({ path: 'personal-page',  params: { userId: this.userAccount }}) 
+            this.$router.push({ path: '/my-account',  query: { emailAddress: this.emailAddress }}) 
           }
         })
         .catch(err => {

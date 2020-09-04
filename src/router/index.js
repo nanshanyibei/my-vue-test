@@ -20,6 +20,10 @@ import MyComments from '@/components/MyComments'
 import ReturnOrders from '@/components/ReturnOrders'
 import ApplyReturns from '@/components/ApplyReturns'
 import ChangePassword from '@/components/ChangePassword'
+import AdministorPage from '@/components/AdministorPage'
+import CommentManager from '@/components/CommentManager'
+import ProductManager from '@/components/ProductManager'
+import TransactionRecord from '@/components/TransactionRecord'
 
 Vue.use(Router)
 
@@ -105,6 +109,22 @@ export default new Router({
       path: '/change-password',
       name: 'ChangePassword',
       component: ChangePassword
+    }, {
+      path: '/administor-page',
+      name: 'AdministorPage',
+      component: AdministorPage
+    }, {
+      path: '/comment-manager',
+      name: 'CommentManager',
+      component: CommentManager
+    }, {
+      path: '/product-manager',
+      name: 'ProductManager',
+      component: ProductManager
+    }, {
+      path: '/transaction-record',
+      name: 'TransactionRecord',
+      component: TransactionRecord
     }
   ]
 })

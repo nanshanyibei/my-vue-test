@@ -13,7 +13,10 @@
         Use and Privacy Notice.
       </div>
     </div>
-    <el-button @click="createAccount" class="create-account">Create account</el-button>
+    <div class="account-button-container">
+      <el-button @click="createAccount" class="create-account">Create account</el-button>
+      <el-button @click="createAdminAccount" class="create-account">Create Admin account</el-button>
+    </div>
   </div>
 </template>
 
@@ -28,26 +31,34 @@ export default {
       lastName: '',
       emailAddress: '',
       mobile: '',
-      userType: 'employee'
+      time: ''
     }
   },
   methods: {
+    getTime(){
+      const date=new Date()
+      this.time=this.time+date.getFullYear()+
+        date.getMonth()>10?''+date.getMonth():'0'+date.getMonth()
+        +date.getDate()>10?''+date.getDate():"0"+date.getDate()
+    },
     createAccount(){
       console.log('test----createAccount', this.accountName, this.password, this.firstName, this.lastName, this.emailAddress);
       this.$axios({
         method: "post",
         url: '/sign-up',
         data: {
-          accountName: this.accountName,
-          password: this.password,
+          userName: this.accountName,
+          passWord: this.password,
           firstName: this.firstName,
           lastName: this.lastName,
           emailAddress: this.emailAddress,
-          mobile: this.mobile,
-          userType: this.userType
+          phoneNo: this.mobile,
+          createDate: this.time,
+          ifAdmin: false
         }
       })
         .then(res => {
+          this.time=''
           if(res.data.code){
             alert(res.data.msg)
           }else{
@@ -56,6 +67,37 @@ export default {
           }
         })
         .catch(err => {
+          this.time=''
+          alert('注册有误，请重新登录')
+          console.log(err, 'error')
+        })
+    },
+    createAdminAccount(){
+      this.$axios({
+        method: "post",
+        url: '/sign-up',
+        data: {
+          userName: this.accountName,
+          passWord: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          emailAddress: this.emailAddress,
+          phoneNo: this.mobile,
+          createDate: this.time,
+          ifAdmin: true
+        }
+      })
+        .then(res => {
+          this.time=''
+          if(res.data.code){
+            alert(res.data.msg)
+          }else{
+            alert(res.data.msg)
+            this.$router.push('/login')
+          }
+        })
+        .catch(err => {
+          this.time=''
           alert('注册有误，请重新登录')
           console.log(err, 'error')
         })
@@ -90,10 +132,10 @@ export default {
   width: 300px;
   margin: 0 auto 20px;
 }
-.create-account{
-  border: 1px solid #000;
-  margin: 40px auto 150px;
-  display: block;
-  width: fit-content;
+.account-button-container{
+  width: 500px;
+  margin: 50px auto;
+  display: flex;
+  justify-content: space-around;
 }
 </style>
