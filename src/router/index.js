@@ -24,6 +24,10 @@ import AdministorPage from '@/components/AdministorPage'
 import CommentManager from '@/components/CommentManager'
 import ProductManager from '@/components/ProductManager'
 import TransactionRecord from '@/components/TransactionRecord'
+import AdministorProductList from '@/components/AdministorProductList'
+import RefundPage from '@/components/RefundPage'
+import SearchUser from '@/components/SearchUser'
+import RefoundProduct from '@/components/RefoundProduct'
 
 Vue.use(Router)
 
@@ -125,6 +129,22 @@ export default new Router({
       path: '/transaction-record',
       name: 'TransactionRecord',
       component: TransactionRecord
+    }, {
+      path: '/administor-product-list',
+      name: 'AdministorProductList',
+      component: AdministorProductList
+    }, {
+      path: '/refund-page',
+      name: 'RefundPage',
+      component: RefundPage
+    }, {
+      path: '/search-user',
+      name: 'SearchUser',
+      component: SearchUser
+    }, {
+      path: '/refound-product',
+      name: 'RefoundProduct',
+      component: RefoundProduct
     }
   ]
 })
