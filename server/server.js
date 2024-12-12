@@ -22,17 +22,11 @@ app.get('/', function (req, res) {
 })
 
 app.post('/sign-up', function (req, res) {
-  const {emailAddress, fullName, passWord, userType} = req.body
-  let tableName
-  if (userType === 'employee') {
-    tableName = 'employee'
-  } else {
-    tableName = 'manager'
-  }
-  var fields = ['emailAddress', 'fullName', 'passWord']
-  var values = [emailAddress, fullName, passWord]
+  const {userName, passWord, firstName, lastName, emailAddress, phoneNo, createDate, ifAdmin} = req.body
+  var fields = ['userName', 'passWord', 'firstName', 'lastName', 'emailAddress', 'phoneNo', 'createDate', 'ifAdmin']
+  var values = [userName, passWord, firstName, lastName, emailAddress, phoneNo, createDate, ifAdmin]
   var sql = 'INSERT INTO ??(??) VALUES (?)'
-  connection.query(sql, [tableName, fields, values], function (error, results, f) {
+  connection.query(sql, ['users_list', fields, values], function (error, results, f) {
     if (error) throw error
     console.log(results)
     return res.json({code: 0, msg: 'You have log up succeed!'})
@@ -40,16 +34,10 @@ app.post('/sign-up', function (req, res) {
 })
 
 app.post('/login', function (req, res) {
-  const {emailAddress, passWord, userType} = req.body
-  let tableName
-  if (userType === 'employee') {
-    tableName = 'employee'
-  } else {
-    tableName = 'manager'
-  }
-  const fields = ['emailAddress', 'passWord']
+  const {emailAddress, passWord, ifAdmin} = req.body
+  const fields = ['emailAddress', 'passWord', 'ifAdmin']
   var sql = 'SELECT ?? FROM ?? WHERE emailAddress = ?'
-  connection.query(sql, [fields, tableName, emailAddress], function (error, results, f) {
+  connection.query(sql, [fields, 'users_list', emailAddress], function (error, results, f) {
     if (error) throw error
     console.log('results', results[0], typeof (results[0]))
     if (results[0].passWord === passWord) {
@@ -59,38 +47,13 @@ app.post('/login', function (req, res) {
   })
 })
 
-app.post('/time-event', function (req, res) {
-  const {fullName, date, event} = req.body
-  console.log('time-event', fullName, date, event)
-  const fields = ['fullName', 'date', 'event']
-  const values = [fullName, date, event]
-  const sql = 'INSERT INTO ??(??) VALUES (?)'
-  connection.query(sql, ['timeEvent', fields, values], function (error, results, f) {
+app.post('/update-personal-message', function (req, res) {
+  const {userName, phoneNo, emailAddress} = req.body
+  var sql = `UPDATE users_list SET userName=${userName},phoneNo=${phoneNo} WHERE emailAddress=${emailAddress};`
+  connection.query(sql, function (error, results, f) {
     if (error) throw error
     console.log(results)
-    return res.json({code: 0, msg: 'You have updateSucceed!'})
-  })
-})
-
-app.get('/get-time-event', function (req, res) {
-  const {fullName} = req.query
-  console.log('fullName', fullName)
-  var sql = 'SELECT * FROM ?? WHERE fullName = ? '
-  connection.query(sql, ['timeEvent', fullName], function (error, results, f) {
-    if (error) throw error
-    console.log('results', results[0], typeof (results[0]))
-    return res.json({code: 1, data: results})
-  })
-})
-
-app.post('/update-event', function (req, res) {
-  const {id, status} = req.body
-  console.log('id,status', id, status)
-  var sql = `UPDATE timeEvent set isFinish=${status} where id=${id}`
-  connection.query(sql, function (error, results) {
-    if (error) throw error
-    console.log('results', results)
-    return res.json({code: 1, data: results})
+    return res.json({code: 0, msg: 'You have update your message succeed!'})
   })
 })
 

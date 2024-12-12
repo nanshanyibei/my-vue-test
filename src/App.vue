@@ -1,22 +1,64 @@
 <template>
-  <div id="app">
-    <div class="header">
-      <img class="top-logo" :src="imgUrl">
-      <div class="login-sign-up">
-        <span class="login-button" @click="clickLogin">Login</span>
-        /
-        <span class="login-button" @click="clickSignUp">Sign Up</span>
+  <div class="content">
+    <div class="top-navigation-bar">
+      <div v-if="!threeNavigation" class="top-navigation-bar-before">
+        <el-menu class="el-menu-demo position-in-center" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="1">Home</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">GIFTS FOR HER</template>
+            <el-menu-item index="2-1">Fashion</el-menu-item>
+            <el-menu-item index="2-2">Beauty</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">GIFTS FOR HIM</template>
+            <el-menu-item index="3-1">Fashion</el-menu-item>
+            <el-menu-item index="3-2">Beauty</el-menu-item>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">GIFTS FOR US</template>
+            <el-menu-item index="4-1">Matching Sets</el-menu-item>
+            <el-menu-item index="4-2">Gourmet Hamners</el-menu-item>
+            <el-menu-item index="4-3">Hotel Packages</el-menu-item>
+          </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">CUSTOMER SERVICE</template>
+            <el-menu-item index="5-1">About Us</el-menu-item>
+            <el-menu-item index="5-2">FA Questions</el-menu-item>
+            <el-menu-item index="5-3">Blog</el-menu-item>
+            <el-menu-item index="5-4">Security & Privacy</el-menu-item>
+            <el-menu-item index="5-5">Returns & Refunds</el-menu-item>
+            <el-menu-item index="5-6">Join the Newslettery</el-menu-item>
+            <el-menu-item index="5-7">Terms & Conditions</el-menu-item>
+            <el-menu-item index="5-8">Deliver & Payment</el-menu-item>
+            <el-menu-item index="5-9">Contact Us</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="6">Account</el-menu-item>
+          <el-menu-item index="7">
+            <router-link class="no-underline" v-if="isRegister" to="/register">Register</router-link> / 
+            <router-link class="no-underline" v-if="isRegister" to="/login">Login</router-link>
+            <span class="no-underline" @click="toPersonalPage" >TEST{{userName}}</span>
+          </el-menu-item>
+        </el-menu>
+      </div>
+      <div v-else class="top-navigation-bar-before">
+        <div class="navigation-container">
+          <span class="navigation-container-home" @click="toHomeClick">Home</span>
+          <span class="navigation-container-center">{{dynamicRoute}}</span>
+          <span class="navigation-container-logout" @click="toLogout">Logout</span>
+        </div>
       </div>
     </div>
-    <router-view/>
-    <div class="footer">
-      <div class="about-us" @click="clickAboutUs">About Us</div>
-      <div class="about-us" @click="clickContactUs">Contact Us</div>
-      <div class="about-us" @click="clickNeedHelp">Need Help</div>
+    <router-view />
+    <div class="footer-navigation">
+      <div class="footer-navigation-top">E-BOOKS/LINKS</div>
+      <div class="footer-navigation-center">Follow us on Social Media:
+        <span>Facebook</span> /
+        <span>Instagram</span> /
+        <span>Twitter</span> /
+        <span>Linkedln</span> /
+        <span>YouTube</span>
+      </div>
     </div>
-    <div class="show-detail" v-if="aboutUs">Details of the relationship company</div>
-    <div class="show-detail" v-if="contactUs">The company's contact information such as phone number, email and address</div>
-    <div class="show-detail" v-if="needHelp">A dialog box appears and help can be sought online</div>
   </div>
 </template>
 
@@ -25,90 +67,137 @@ export default {
   name: 'App',
   data(){
     return {
-      username:'TEST',
-      imgUrl: require('./assets/WechatIMG57.png'),
-      aboutUs:false,
-      contactUs:false,
-      needHelp:false
+      isRegister: true,
+      userName: '',
+      threeNavigation: false,
+      dynamicRoute: ''
     }
   },
   methods:{
-    clickLogin(){
-      this.$router.push('/login')
-      this.contactUs=false
-      this.aboutUs=false
-      this.needHelp=false
+    getPathChangeStatus() {
+      if (this.$route.path === '/login') {
+        this.isRegister = true
+      }
     },
-    clickSignUp(){
-      this.$router.push('/register')
-      this.contactUs=false
-      this.aboutUs=false
-      this.needHelp=false
+    toPersonalPage() {
+      this.threeNavigation=true
+      this.dynamicRoute = 'My Account'
+      this.$router.push({ path: '/my-account',  query: { userId: this.userName }})  
     },
-    clickAboutUs(){
-      this.aboutUs=!this.aboutUs
-      this.contactUs=false
-      this.needHelp=false
+    handleRoute() {
+
     },
-    clickContactUs(){
-      this.contactUs=!this.contactUs
-      this.aboutUs=false
-      this.needHelp=false
+    toLogout() {
+
     },
-    clickNeedHelp(){
-      this.needHelp=!this.needHelp
-      this.aboutUs=false
-      this.contactUs=false
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      this.threeNavigation = false
+      if(keyPath[0] === '1') {
+        this.$router.push({path:'/'})
+      } else if(keyPath[0] === '2') {
+        this.$router.push({path:'/gift-page', query:{giftType: 'her'}})
+      } else if(keyPath[0] === '3') {
+        this.$router.push({path:'/gift-page', query:{giftType: 'him'}})
+      } else if (keyPath[0] === '4') {
+        this.$router.push({path:'/gift-page', query:{giftType: 'us'}})
+      } else if(keyPath[1] === '5-1'){
+        this.$router.push({path:'/about-us'})
+        this.dynamicRoute = 'About Us'
+        this.threeNavigation = true
+      } else if(keyPath[1] === '5-2') {
+        this.$router.push({path:'/f-a-question'})
+        this.threeNavigation = true
+        this.dynamicRoute='FA Questions'
+      } else if(keyPath[1] === '5-4') {
+        this.$router.push({path:'/security-privacy'})
+        this.threeNavigation = true
+        this.dynamicRoute='Security & Privacy'
+      } else if(keyPath[1] === '5-5') {
+        this.$router.push('/return-orders')
+        this.threeNavigation=true
+        this.dynamicRoute='Returns & Refunds'
+      } else if(keyPath[1] === '5-8') {
+        this.$router.push('/checkout')
+        this.threeNavigation=false
+      }
+    },
+    toHomeClick() {
+      this.$router.push({path:'/'})
+      this.threeNavigation=false
     }
+  },
+  watch:{
+    '$route':'getPathChangeStatus'
   }
 }
 </script>
 
-<style>
-#app{
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+<style scoped>
+.top-navigation-bar-before::before{
+  display: block;
+  content: 'MON CHERI GIFTS';
+  border-bottom: 1px solid #000;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
   font-size: 16px;
 }
-.header,.footer{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  height: 54px;
+.top-navigation-bar{
+  border-bottom: 1px solid #000;
 }
-.header{
-  border-bottom: 1px solid #2c3e50;
+.no-underline{
+  text-decoration: none;
 }
-.footer{
-  border-top: 1px solid #2c3e50;
-}
-.login-sign-up{
-  margin-right: 20px;
-  font-size: 18px;
-  line-height: 54px;
-}
-.top-logo{
-  width: 50px;
-  height: 50px;
-  margin-left: 20px;
-}
-.login-button{
+.navigation-container{
+  height: 60px;
+  line-height: 60px;
+  width: 980px;
+  margin: 0 auto;
+  color: #909399;
   cursor: pointer;
 }
-.footer{
-  display: flex;
-  justify-content: space-between
+.navigation-container-home{
+  border-right: 1px solid #000;
+  width: 200px;
+  text-align: left;
+  display: inline-block;
+  color: #909399;
+  text-decoration: none;
 }
-.about-us{
-  margin-left: 20px;
-  margin-right: 20px;
-  font-size: 18px;
+.navigation-container-logout{
+  width: 200px;
+  text-align: right;
+  display: inline-block;
+  float: right;
+  border-left: 1px solid #000;
 }
-.show-detail{
-  width: 880px;
-  margin: 10px auto;
-  text-align: center
+.navigation-container-center{
+  width: 570px;
+  text-align: center;
+  display: inline-block;
+}
+.position-in-center{
+  width: fit-content;
+  margin: 0 auto;
+  border: none;
+}
+.footer-navigation{
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  font-size: 16px;
+}
+.footer-navigation-center{
+  text-decoration: underline;
+  width: fit-content;
+  margin: 0 auto 15px;
+}
+.footer-navigation-center span{
+  cursor: pointer;
+}
+.footer-navigation-top{
+  width: fit-content;
+  margin: 5px auto 15px;
 }
 </style>

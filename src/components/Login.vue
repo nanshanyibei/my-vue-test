@@ -1,27 +1,18 @@
 <template>
-  <div class="hello">
-    <div class="login-container">
-      <h1 class="please-login">Log In</h1>
-      <div class="word-input">
-        <span class="emial">Email:</span>
-        <el-input class="user-name" v-model="userName" placeholder="please enter your email adress"></el-input>
-      </div>
-      <div class="word-input">
-        <span class="emial">Password:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="passWord" show-password></el-input>
-      </div>
-      <div class="select-area">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-button class="login-button" plain @click="clickLogin">Log In</el-button>
-      </div>
+  <div class="register-content">
+    <div class="moncherigift">Moncherigift</div>
+    <div class="register-content-container">
+      <el-input v-model="emailAddress" class="register-element" placeholder="User Account" />
+      <el-input v-model="password" class="register-element" placeholder="User Password" />
     </div>
+		<div class="trouble-loggin-terms-of">
+			<el-button>Trouble loggin in ?</el-button>
+			<el-button>Terms of use</el-button>
+		</div>
+		<div class="register-login-container">
+			<el-button @click="toRegister">Register</el-button>
+			<el-button @click="toLogin">Login</el-button>
+		</div>
   </div>
 </template>
 
@@ -30,83 +21,68 @@ export default {
   name: 'Login',
   data () {
     return {
-      userName:'',
-      passWord:'',
-      options: [{
-          value: 'employee',
-          label: 'employee'
-        }, {
-          value: 'manager',
-          label: 'manager'
-        }],
-      value: 'employee'
+      emailAddress: '',
+      password: '',
     }
-  },
-  methods:{
-    clickLogin(){
-      console.log('userName,passWord',this.userName,this.passWord)
+	},
+	methods: {
+		toRegister() {
+			this.$router.push('/register')
+    },
+    toLogin() {
       this.$axios({
-				method: "post",
-				url: '/login',
-				data: {
-          emailAddress: this.userName,
-          passWord: this.passWord,
-          userType:this.value
-				}
-			})
-				.then(res => {
+        method: "post",
+        url: '/login',
+        data: {
+          emailAddress: this.emailAddress,
+          passWord: this.password
+        }
+      })
+        .then(res => {
           if(res.data.code){
             alert(res.data.msg)
           }else{
-            console.log(res.data.data)
-            alert('You have Login Succeed!')
-            this.$router.push({path:'/after-login',query:{id:this.userName}})
+            alert('You have successfully logged in')
+            this.$router.push({ path: '/my-account',  query: { emailAddress: this.emailAddress }}) 
           }
-				})
-				.catch(err => {
-					console.log(err, 'error')
-				})
+        })
+        .catch(err => {
+          alert('登录有误，请重新登录')
+          console.log(err, 'error')
+        })
     }
-  }
+	}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hello{
-  margin: 0 auto;
-  width: 880px;
-}
-.login-container{
-  margin: 30px auto;
+.moncherigift{
   width: 500px;
+  margin: 150px auto 0;
+  border: 1px solid #000;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
 }
-.please-login{
-  margin-bottom: 30px;
-  text-align: center
+.register-content-container{
+  width: 400px;
+  margin: 0 auto;
+  border: 1px solid #000;
+  border-top: none;
+  padding-top: 20px;
 }
-.password{
-  margin-bottom: 30px;
-  margin-left: 20px;
+.register-element{
+  width: 300px;
+  margin: 0 auto 20px;
+  display: block;
 }
-.user-name{
-  margin-bottom: 15px;
-  margin-left: 50px
+.trouble-loggin-terms-of{
+	width: fit-content;
+	margin: 60px auto 0;
 }
-.word-input{
-  display: flex
-}
-.emial{
-  line-height: 45px;
-  font-size: 18px;
-}
-.select-area{
-  display: flex;
-  justify-content: space-between;
-  margin: 30px 0 50px;
-}
-.register-button{
-  position: absolute;
-  right: 0;
+.register-login-container{
+	width: fit-content;
+	margin: 60px auto 150px;
 }
 </style>

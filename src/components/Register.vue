@@ -1,84 +1,106 @@
 <template>
-  <div class="hello">
-    <div class="login-container">
-      <h1 class="please-login">Welcome</h1>
-      <div class="word-input">
-        <span class="emial">Enter your email:</span>
-        <el-input class="user-name" v-model="emailAddress" placeholder="please enter your email adress"></el-input>
+  <div class="register-content">
+    <div class="moncherigift">Moncherigift</div>
+    <div class="register-content-container">
+      <el-input v-model="accountName" class="register-element" placeholder="account name" />
+      <el-input v-model="password" show-password class="register-element" placeholder="Password" />
+      <el-input v-model="firstName" class="register-element" placeholder="First Name" />
+      <el-input v-model="lastName" class="register-element" placeholder="Las tName" />
+      <el-input v-model="emailAddress" class="register-element" placeholder="Email" />
+      <el-input v-model="mobile" class="register-element" placeholder="Mobile" />
+      <div class="bottom-words">
+        By creating an account, you agree that you have read and accepted our Conditions of
+        Use and Privacy Notice.
       </div>
-      <div class="word-input">
-        <span class="emial">Full Name:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="fullName" show-password></el-input>
-      </div>
-      <div class="word-input">
-        <span class="emial">Password:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="passWord" show-password></el-input>
-      </div>
-      <div class="word-input">
-        <span class="emial">Confrim password:</span>
-        <el-input class="password" placeholder="Please enter the password" v-model="rePassWord" show-password></el-input>
-      </div>
-      <div class="select-area">
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-button class="login-button" plain @click="clickRegister">Sign Up</el-button>
-      </div>
+    </div>
+    <div class="account-button-container">
+      <el-button @click="createAccount" class="create-account">Create account</el-button>
+      <el-button @click="createAdminAccount" class="create-account">Create Admin account</el-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Register',
   data () {
     return {
-      emailAddress:'',
-      fullName:'',
-      passWord:'',
-      rePassWord:'',
-      options: [{
-          value: 'employee',
-          label: 'employee'
-        }, {
-          value: 'manager',
-          label: 'manager'
-        }],
-      value: 'employee'
+      accountName: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      emailAddress: '',
+      mobile: '',
+      time: ''
     }
   },
-  methods:{
-    clickRegister(){
-      if(this.passWord !== this.rePassWord){
-        alert('You have input the different password')
-      }else{
-        this.$axios({
-          method: "post",
-          url: '/sign-up',
-          data: {
-            emailAddress: this.emailAddress,
-            passWord: this.passWord,
-            fullName:this.fullName,
-            userType:this.value
+  methods: {
+    getTime(){
+      const date=new Date()
+      this.time=this.time+date.getFullYear()+
+        date.getMonth()>10?''+date.getMonth():'0'+date.getMonth()
+        +date.getDate()>10?''+date.getDate():"0"+date.getDate()
+    },
+    createAccount(){
+      console.log('test----createAccount', this.accountName, this.password, this.firstName, this.lastName, this.emailAddress);
+      this.$axios({
+        method: "post",
+        url: '/sign-up',
+        data: {
+          userName: this.accountName,
+          passWord: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          emailAddress: this.emailAddress,
+          phoneNo: this.mobile,
+          createDate: this.time,
+          ifAdmin: false
+        }
+      })
+        .then(res => {
+          this.time=''
+          if(res.data.code){
+            alert(res.data.msg)
+          }else{
+            alert(res.data.msg)
+            this.$router.push('/login')
           }
         })
-          .then(res => {
-            if(res.data.code){
-              alert(res.data.msg)
-            }else{
-              alert(res.data.msg)
-              this.$router.push('/login')
-            }
-          })
-          .catch(err => {
-            console.log(err, 'error')
-          })
-      }
+        .catch(err => {
+          this.time=''
+          alert('注册有误，请重新登录')
+          console.log(err, 'error')
+        })
+    },
+    createAdminAccount(){
+      this.$axios({
+        method: "post",
+        url: '/sign-up',
+        data: {
+          userName: this.accountName,
+          passWord: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          emailAddress: this.emailAddress,
+          phoneNo: this.mobile,
+          createDate: this.time,
+          ifAdmin: true
+        }
+      })
+        .then(res => {
+          this.time=''
+          if(res.data.code){
+            alert(res.data.msg)
+          }else{
+            alert(res.data.msg)
+            this.$router.push('/login')
+          }
+        })
+        .catch(err => {
+          this.time=''
+          alert('注册有误，请重新登录')
+          console.log(err, 'error')
+        })
     }
   }
 }
@@ -86,41 +108,34 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hello{
+.moncherigift{
+  width: 500px;
+  margin: 150px auto 0;
+  border: 1px solid #000;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+.register-content-container{
+  width: 400px;
   margin: 0 auto;
-  width: 880px;
+  border: 1px solid #000;
+  border-top: none;
+  padding-top: 20px;
 }
-.login-container{
-  margin: 30px auto;
-  width: 600px;
+.register-element{
+  width: 300px;
+  margin: 0 auto 20px;
+  display: block;
 }
-.please-login{
-  margin-bottom: 30px;
-  text-align: center
+.bottom-words{
+  width: 300px;
+  margin: 0 auto 20px;
 }
-.password{
-  margin-bottom: 30px;
-  width: 430px;
-}
-.user-name{
-  margin-bottom: 15px;
-  width: 430px;
-}
-.word-input{
-  display: flex
-}
-.emial{
-  line-height: 45px;
-  font-size: 18px;
-  width: 170px;
-}
-.select-area{
+.account-button-container{
+  width: 500px;
+  margin: 50px auto;
   display: flex;
-  justify-content: space-between;
-  margin: 30px 0 50px;
-}
-.register-button{
-  position: absolute;
-  right: 0;
+  justify-content: space-around;
 }
 </style>

@@ -20,52 +20,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for em
 -- ----------------------------
-DROP TABLE IF EXISTS `employee`;
-CREATE TABLE `employee` (
-	`id` int(11) not null auto_increment primary key,
-  `emailAddress` varchar(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `users_list`;
+CREATE TABLE `users_list` (
+	`userId` int(11) not null auto_increment primary key,
+  `userName` varchar(20) DEFAULT NULL, 
   `passWord` varchar(20) DEFAULT NULL,
-	`fullName` varchar(20) DEFAULT NULL
-)ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of employee
--- ----------------------------
-BEGIN;
-INSERT INTO `employee` VALUES (`1234@qq.com`, `1234`, `1234`);
-INSERT INTO `employee` VALUES (`1234567@qq.com`, `1234567`, `1234567`);
-INSERT INTO `employee` VALUES (`12345@qq.com`, `12345`, `12345`);
-COMMIT;
-
-DROP TABLE IF EXISTS `manager`;
-CREATE TABLE `manager` (
-	`id` int(11) not null auto_increment primary key,
+  `firstName` varchar(20) DEFAULT NULL,
+  `lastName` varchar(20) DEFAULT NULL,
   `emailAddress` varchar(20) DEFAULT NULL,
-  `passWord` varchar(20) DEFAULT NULL,
-	`fullName` varchar(20) DEFAULT NULL
-)ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
-
-BEGIN;
-INSERT INTO `employee` VALUES (`1234@qq.com`, `1234`, `1234`);
-INSERT INTO `employee` VALUES (`1234567@qq.com`, `1234567`, `1234567`);
-INSERT INTO `employee` VALUES (`12345@qq.com`, `12345`, `12345`);
-COMMIT;
-
-SET FOREIGN_KEY_CHECKS = 1;
-
-DROP TABLE IF EXISTS `timeEvent`;
-CREATE TABLE `timeEvent` (
-	`id` int(11) not null auto_increment primary key,
-	`fullName` varchar(20) DEFAULT NULL,
-  `event` varchar(40) DEFAULT NULL,
-  `date` varchar(10) DEFAULT NULL,
-  `isFinish` varchar(1) DEFAULT '0' 
+  `phoneNo` varchar(11) DEFAULT NULL,
+  `createDate` varchar(11) DEFAULT NULL,
+  `ifAdmin` TINYINT(1) DEFAULT NULL
 );ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
-BEGIN;
-INSERT INTO `employee` VALUES (`1234@qq.com`, `1234`, `1234`);
-INSERT INTO `employee` VALUES (`1234567@qq.com`, `1234567`, `1234567`);
-INSERT INTO `employee` VALUES (`12345@qq.com`, `12345`, `12345`);
-COMMIT;
-
-SET FOREIGN_KEY_CHECKS = 1;

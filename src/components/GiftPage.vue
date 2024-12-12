@@ -1,36 +1,44 @@
 <template>
   <div class="page-container">
-    <div class="gift-for" @click="toGiftsPage('her')">Gifts for her</div>
+		<div class="gift-for">Gifts for {{giftForType}}</div>
 		<div class="fashion-container">
-			<div class="images-name-container">
-				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
-					<div class="image-price-container" @click="toProductItem">
-						<div class="image">image{{item}}
-							<div class="price">price{{item}}</div>
-						</div>
-					</div>
-					<div class="store-name">Name{{item}}</div>
-				</div>
-			</div>
-		</div>
-    <div class="gift-for" @click="toGiftsPage('him')">Gifts for him</div>
-		<div class="fashion-container">
-			<div class="images-name-container">
-				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
-					<div class="image-price-container" @click="toProductItem">
-						<div class="image">image{{item}}
-							<div class="price">price{{item}}</div>
-						</div>
-					</div>
-					<div class="store-name">Name{{item}}</div>
-				</div>
-			</div>
-		</div>
-    <div class="gift-for" @click="toGiftsPage('us')">Gifts for us</div>
-		<div class="fashion-container">
+			<el-button class="fashion">Fashion</el-button>
 			<div class="images-name-container" @click="toProductItem">
 				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
 					<div class="image-price-container">
+						<div class="image">image{{item}}
+							<div class="price">price{{item}}</div>
+						</div>
+					</div>
+					<div class="store-name">Name{{item}}</div>
+				</div>
+			</div>
+			<div class="images-name-container">
+				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
+					<div class="image-price-container" @click="toProductItem">
+						<div class="image">image{{item}}
+							<div class="price">price{{item}}</div>
+						</div>
+					</div>
+					<div class="store-name">Name{{item}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="fashion-container">
+			<el-button class="fashion">Beauty</el-button>
+			<div class="images-name-container" @click="toProductItem">
+				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
+					<div class="image-price-container">
+						<div class="image">image{{item}}
+							<div class="price">price{{item}}</div>
+						</div>
+					</div>
+					<div class="store-name">Name{{item}}</div>
+				</div>
+			</div>
+			<div class="images-name-container">
+				<div v-for="(item, index) in fashionFirstLine" :key="index" class="element-container">
+					<div class="image-price-container" @click="toProductItem">
 						<div class="image">image{{item}}
 							<div class="price">price{{item}}</div>
 						</div>
@@ -44,19 +52,29 @@
 
 <script>
 export default {
-  name: 'HomePage',
+  name: 'GiftPage',
   data () {
     return {
-      fashionFirstLine: [1,2,3,4,5]
+			giftForType: this.$route.query.giftType,
+			fashionFirstLine: [1,2,3,4,5],
+			fashionSecondLine: [1,2,3,4,5],
+			beautyFirstLine: [1,2,3,4,5],
+			beautySecondLine: [1,2,3,4,5]
     }
-  },
-  methods: {
-    toGiftsPage(giftPageType) {
-      this.$router.push({path:'/gift-page', query: {giftType: giftPageType}})
+	},
+	methods: {
+    getPathChangeStatus() {
+			this.giftForType = this.$route.query.giftType
 		},
 		toProductItem(){
 			this.$router.push('/product-item')
 		}
+	},
+	mounted() {
+		
+	},
+	watch:{
+    '$route':'getPathChangeStatus'
   }
 }
 </script>
@@ -70,11 +88,14 @@ export default {
 .gift-for{
 	font-size: 20px;
 	font-weight: 500;
-  margin-top: 30px;
-  cursor: pointer;
 }
 .fashion-container{
 	margin-top: 30px;
+}
+.fashion{
+	display: block;
+	font-weight: 500;
+	font-size: 16px;
 }
 .element-container{
 	width: 190px;
